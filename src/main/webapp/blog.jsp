@@ -31,7 +31,7 @@
     <div class="container">
       <a
         class="navbar-brand d-flex justify-content-between align-items-center order-lg-0"
-        href="./index.jsp"
+        href="home"
       >
         <img src="assets/img/logo_color%20(1).png" alt="logo" />
       </a>

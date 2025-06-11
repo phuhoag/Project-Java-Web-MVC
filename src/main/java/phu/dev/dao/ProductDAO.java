@@ -78,6 +78,37 @@ public class ProductDAO {
     }
 
 
+    public List<Product> searchByKeyword(String keyword) {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT * FROM products WHERE name LIKE ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, keyword + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getDouble("price"),
+                        rs.getInt("quantity"),
+                        rs.getInt("view"),
+                        rs.getInt("category_id"),
+                        rs.getTimestamp("created_at"),
+                        rs.getString("image")
+                );
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+
+
+
+
+
     public Product findById(int id) {
         String sql = "SELECT * FROM products WHERE id=?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {

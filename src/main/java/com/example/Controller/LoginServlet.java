@@ -11,6 +11,11 @@ import phu.dev.ConnectMysql.DBConnection;
 import java.io.IOException;
 import java.sql.Connection;
 public class LoginServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("login.jsp").include(req, resp);
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String email = request.getParameter("email");
@@ -24,7 +29,8 @@ public class LoginServlet extends HttpServlet {
                 // Đăng nhập thành công
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("home");
+
             } else {
                 // Đăng nhập thất bại
                 request.setAttribute("error", "Invalid email or password!");

@@ -1,29 +1,42 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.List" %>
-<%@ page import="phu.dev.model.Product" %>
-<%@ page import="java.io.File" %>
+
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="phu.dev.dao.ProductDAO" %>
 <%@ page import="phu.dev.model.Product" %>
-<%@ page import="java.sql.*" %>
-<%@ page import="java.util.*" %>
+<%@ page import="phu.dev.ConnectMysql.DBConnection" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.sql.Connection" %>
+
+
+
 
 <%
-    String jdbcURL = "jdbc:mysql://localhost:3306/dao_servlet";
-    String jdbcUsername = "root";
-    String jdbcPassword = "";
-    List<Product> products = new ArrayList<>();
+    String keyword = request.getParameter("keyword");
+    List<Product> products = null;
 
     try {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection conn = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
-        ProductDAO productDAO = new ProductDAO(conn);
-        products = productDAO.findAll();
-        conn.close();
+        Connection conn = DBConnection.getConnection();
+        ProductDAO dao = new ProductDAO(conn);
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            products = dao.searchByKeyword(keyword);
+        } else {
+            products = dao.findAll();
+        }
     } catch (Exception e) {
         e.printStackTrace();
     }
 %>
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -52,7 +65,7 @@
 <body>
     <nav class = "navbar navbar-expand-lg navbar-light bg-white py-4 fixed-top">
         <div class = "container">
-            <a class = "navbar-brand d-flex justify-content-between align-items-center order-lg-0" href = "./index.jsp">
+            <a class = "navbar-brand d-flex justify-content-between align-items-center order-lg-0" href = "home">
                 <img src = "assets/img/logo_color%20(1).png" alt = "logo">
               
             </a>
@@ -62,7 +75,21 @@
 
                 
                      
-                <input type="text" id="searchInput" placeholder="Tìm sản phẩm..." class="position-relative rounded-5 form-control-sm" style="width: 200px; height: 35px; border: 1px solid transparent; background-color: rgba(207, 211, 203, .2);" onkeyup="searchProduct()">
+        <form action="home" method="get" style="display:inline;">
+            <input
+                type="text"
+                name="keyword"
+                id="searchInput"
+                placeholder="Tìm sản phẩm..."
+                class="position-relative rounded-5 form-control-sm"
+                style="width: 200px; height: 35px; border: 1px solid transparent; background-color: rgba(207, 211, 203, .2);"
+                value="<%= request.getParameter("keyword") != null ? request.getParameter("keyword") : "" %>"
+                oninput="this.form.submit()"
+            />
+        </form>
+
+
+
 
                     
                 
@@ -70,12 +97,12 @@
                
                 <button type = "button" class = "btn position-relative" style="font-size: 20px;">
                    
-                   <a href="products?action=list" style="color: black;"> <i class="fa-solid fa-screwdriver-wrench"></i></a>
+                   <a href="products" style="color: black;"> <i class="fa-solid fa-screwdriver-wrench"></i></a>
                    
                 </button>
 
                
-               <a href="./login.jsp" class="text-reset" >
+               <a href="LoginServlet" class="text-reset" >
                 <button type="button" class = "btn position-relative " style="font-size: 20px;">
 
                 <i class="bi bi-person-circle"></i>
@@ -156,28 +183,27 @@
     </header>
 
 
-   
+
 
   
-    <section id = "collection" class = "py-5">
-        <div class = "container-fluid">
-            <div class = "title text-center">
-                <h2 class = "position-relative d-inline-block">NEW ARRIVAL</h2>
+    <section id="collection" class="py-5">
+        <div class="container-fluid">
+            <div class="title text-center">
+                <h2 class="position-relative d-inline-block">NEW ARRIVAL</h2>
             </div>
 
-            <div class = "row g-0">
-                
-                <div class="collection-list mt-4 row gx-0 gy-3" >
+            <div class="row g-0">
+                <div class="collection-list mt-4 row gx-0 gy-3">
                     <% for(Product p : products) { %>
                         <div class="col-md-6 col-lg-4 col-xl-3 p-2 new">
                             <div class="collection-img position-relative overflow-hidden">
-                                <a href="./detail.jsp">
+                                <a href="detail?productId=<%= p.getId() %>">
                                     <img src="assets/img/<%= p.getImage() %>" class="w-100" alt="<%= p.getName() %>">
                                 </a>
                             </div>
                             <div class="text-center">
                                 <div class="rating mt-3">
-                                    <!-- Chèn đánh giá nếu cần -->
+                                    <!-- Thêm sao đánh giá nếu cần -->
                                 </div>
                                 <p class="text-capitalize my-1"><%= p.getName() %></p>
                                 <span class="fw-bold"><%= String.format("%,.0f", p.getPrice()) %> VND</span>
@@ -185,15 +211,10 @@
                         </div>
                     <% } %>
                 </div>
-
             </div>
         </div>
-
-
-
-
-        
     </section>
+
    
    
     

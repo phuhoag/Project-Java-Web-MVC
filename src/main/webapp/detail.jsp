@@ -19,7 +19,7 @@
 <body>
     <nav class = "navbar navbar-expand-lg navbar-light bg-white py-4 fixed-top">
         <div class = "container">
-            <a class = "navbar-brand d-flex justify-content-between align-items-center order-lg-0" href = "./index.jsp">
+            <a class = "navbar-brand d-flex justify-content-between align-items-center order-lg-0" href = "home">
                 <img src = "assets/img/logo_color%20(1).png" alt = "logo">
               
             </a>
@@ -44,7 +44,7 @@
                     <a href="./cart.jsp" class="user">
                         <button type="button" class="btn position-relative" style="font-size: 20px;">
                             <i class="bi bi-cart"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge bg-danger" style="font-size: 12px;">0</span>
+
                         </button>
                     </a>
                     
@@ -153,7 +153,7 @@
                   </form>
               </c:when>
               <c:otherwise>
-                  <p style="color:red;">⚠️ Lỗi: Không có đối tượng product được truyền vào detail.jsp</p>
+
               </c:otherwise>
           </c:choose>
 

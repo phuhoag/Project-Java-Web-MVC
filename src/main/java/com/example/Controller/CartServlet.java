@@ -71,7 +71,8 @@ public class CartServlet extends HttpServlet {
             }
 
             session.setAttribute("cart", cart);
-            response.sendRedirect("cart.jsp");
+            request.getRequestDispatcher("cart.jsp").forward(request, response);
+
 
         } catch (NumberFormatException e) {
             System.err.println("Lỗi chuyển đổi số: " + e.getMessage());
