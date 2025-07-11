@@ -11,6 +11,19 @@ import java.util.List;
 
 @WebServlet("/add-to-cart")
 public class CartServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        if ("view".equals(action)) {
+            request.getRequestDispatcher("cart.jsp").forward(request, response);
+        } else {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action");
+        }
+    }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -34,12 +47,6 @@ public class CartServlet extends HttpServlet {
                 imageUrl == null || imageUrl.isEmpty()) {
 
             System.err.println("Lỗi: Thiếu dữ liệu từ form:");
-            System.err.println("id = " + idStr);
-            System.err.println("name = " + name);
-            System.err.println("price = " + priceStr);
-            System.err.println("quantity = " + quantityStr);
-            System.err.println("imageUrl = " + imageUrl);
-
             response.sendRedirect("error.jsp");
             return;
         }
@@ -71,12 +78,12 @@ public class CartServlet extends HttpServlet {
             }
 
             session.setAttribute("cart", cart);
-            request.getRequestDispatcher("cart.jsp").forward(request, response);
 
+            // Forward để hiển thị cart.jsp mà không đổi URL
+            request.getRequestDispatcher("cart.jsp").forward(request, response);
 
         } catch (NumberFormatException e) {
             System.err.println("Lỗi chuyển đổi số: " + e.getMessage());
-            e.printStackTrace();
             response.sendRedirect("error.jsp");
         }
     }

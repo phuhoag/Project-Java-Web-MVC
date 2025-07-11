@@ -13,9 +13,9 @@ import java.util.List;
 
 @WebServlet("/remove-from-cart")
 public class RemoveFromCartServlet extends HttpServlet {
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         int index = Integer.parseInt(request.getParameter("index"));
         HttpSession session = request.getSession();
         List<OrderItem> cart = (List<OrderItem>) session.getAttribute("cart");
@@ -24,7 +24,9 @@ public class RemoveFromCartServlet extends HttpServlet {
             cart.remove(index);
         }
 
-        response.sendRedirect("cart.jsp");
+
+        request.getRequestDispatcher("cart.jsp").forward(request, response);
     }
 }
+
 

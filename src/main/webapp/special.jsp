@@ -21,7 +21,7 @@
 <body>
     <nav class = "navbar navbar-expand-lg navbar-light bg-white py-4 fixed-top">
         <div class = "container">
-            <a class = "navbar-brand d-flex justify-content-between align-items-center order-lg-0" href = "/index.html">
+            <a class = "navbar-brand d-flex justify-content-between align-items-center order-lg-0" href = "home">
                 <img src = "assets/img/logo_color%20(1).png" alt = "logo">
               
             </a>

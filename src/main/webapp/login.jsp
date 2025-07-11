@@ -13,52 +13,103 @@
 
 
 
+
  <style>
+    html {
+      font-family: "Roboto", sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+      list-style: none;
+      text-decoration: none;
+    }
+    header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 10%;
+    }
+
+    .logo {
+      max-width: 120px;
+      height: auto;
+    }
+
     body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #121212;
-      color: white;
-      height: 100vh;
+
+      background: url(./assets/img/fashion.avif) no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 100vh;
     }
+
     .login-container {
-      background-color: #222;
-      padding: 30px;
-      border-radius: 10px;
+      max-width: 400px;
+      background-color: transparent;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      padding: 20px;
+      border-radius: 20px;
+      color: #fff;
       width: 350px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.7);
+    }
+
+    .social-icons a {
+      margin: 0 10px;
+      font-size: 24px;
+      color: #fff;
     }
     .btn-custom {
-      background-color: #007bff;
-      border: none;
-    }
-    .btn-custom:hover {
-      background-color: #0056b3;
-    }
-    input.form-control {
       background-color: transparent;
-      color: white;
-      border: 1px solid #555;
+      color: #fff;
+      font-weight: bold;
+      border: 2px solid rgba(255, 255, 255, 0.5);
     }
-    input.form-control:focus {
-      border-color: #007bff;
-      box-shadow: none;
-      background-color: transparent;
-      color: white;
+    a {
+      color: #fff;
+      text-decoration: none;
     }
-    .error-message {
-      color: #ff4d4d;
-      margin-top: 10px;
+
+    .form-group input::placeholder {
+      color: #fff;
     }
+
+    .form-check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-check-label {
+      margin-bottom: 0;
+    }
+
   </style>
 
 </head>
 <body>
 
+ <header>
+    <a href="home"> <img src="assets/img/logo_color%20(1).png" alt="" /></a>
+  </header>
 <div class="login-container text-center">
   <h2 class="mb-4">Login</h2>
+  <div class="social-icons mb-3">
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-google"></i></a>
+            <a href="#"><i class="bi bi-twitter"></i></a>
+          </div>
 
   <form method="post" action="LoginServlet">
     <div class="mb-3">
@@ -86,13 +137,21 @@
   </div>
 </div>
 
+
+
+...
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
   function togglePasswordVisibility() {
-    const passInput = document.querySelector('input[name="password"]');
-    const toggle = document.getElementById('togglePassword');
-    passInput.type = toggle.checked ? 'text' : 'password';
+    const passwordInput = document.querySelector('input[name="password"]');
+    passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
   }
 </script>
+</body>
+</html>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

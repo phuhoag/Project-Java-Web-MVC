@@ -26,8 +26,8 @@ public class ProductDAO {
                         rs.getDouble("price"),
                         rs.getInt("quantity"),
                         rs.getInt("view"),
-                        rs.getInt("category_id"), // ✅ ĐÃ SỬA
-                        rs.getTimestamp("created_at"), // ✅ ĐÃ SỬA
+                        rs.getInt("category_id"),
+                        rs.getTimestamp("created_at"),
                         rs.getString("image")
                 );
                 products.add(product);
@@ -39,7 +39,7 @@ public class ProductDAO {
     }
 
     public void insert(Product product) throws SQLException {
-        String sql = "INSERT INTO products (name, description, price, quantity, view, category_id, created_at, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"; // ✅ SỬA category_id, created_at
+        String sql = "INSERT INTO products (name, description, price, quantity, view, category_id, created_at, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, product.getName());
             ps.setString(2, product.getDescription());
@@ -54,7 +54,7 @@ public class ProductDAO {
     }
 
     public void update(Product product) throws SQLException {
-        String sql = "UPDATE products SET name=?, description=?, price=?, quantity=?, view=?, category_id=?, image=? WHERE id=?"; // ✅ SỬA category_id
+        String sql = "UPDATE products SET name=?, description=?, price=?, quantity=?, view=?, category_id=?, image=? WHERE id=?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, product.getName());
             ps.setString(2, product.getDescription());
@@ -69,14 +69,12 @@ public class ProductDAO {
     }
 
     public void delete(int id) throws SQLException {
-
         String sql = "DELETE FROM products WHERE id=?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             ps.executeUpdate();
         }
     }
-
 
     public List<Product> searchByKeyword(String keyword) {
         List<Product> products = new ArrayList<>();
@@ -105,10 +103,6 @@ public class ProductDAO {
         return products;
     }
 
-
-
-
-
     public Product findById(int id) {
         String sql = "SELECT * FROM products WHERE id=?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -122,8 +116,8 @@ public class ProductDAO {
                         rs.getDouble("price"),
                         rs.getInt("quantity"),
                         rs.getInt("view"),
-                        rs.getInt("category_id"), // ✅ ĐÃ SỬA
-                        rs.getTimestamp("created_at"), // ✅ ĐÃ SỬA
+                        rs.getInt("category_id"),
+                        rs.getTimestamp("created_at"),
                         rs.getString("image")
                 );
             }
@@ -132,4 +126,56 @@ public class ProductDAO {
         }
         return null;
     }
+
+
+
+
+
+
+
+    public List<Product> getProductsByNamePrefix(String prefix) {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT * FROM products WHERE UPPER(name) LIKE UPPER(?)";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, prefix + "%"); // KHÔNG cần .toUpperCase()
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getDouble("price"),
+                        rs.getInt("quantity"),
+                        rs.getInt("view"),
+                        rs.getInt("category_id"),
+                        rs.getTimestamp("created_at"),
+                        rs.getString("image")
+                );
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

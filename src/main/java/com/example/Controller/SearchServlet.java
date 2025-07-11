@@ -14,8 +14,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
 
-
-
 @WebServlet("/search")
 public class SearchServlet extends HttpServlet {
     private ProductDAO productDAO;
@@ -37,13 +35,14 @@ public class SearchServlet extends HttpServlet {
         String keyword = request.getParameter("keyword");
         List<Product> products;
 
-        if (keyword != null && !keyword.trim().isEmpty()) {
-            products = productDAO.searchByKeyword(keyword);
+        // Chỉ tìm kiếm nếu keyword dài từ 2 ký tự trở lên
+        if (keyword != null && keyword.trim().length() >= 2) {
+            products = productDAO.searchByKeyword(keyword.trim());
         } else {
-            products = productDAO.findAll();
+            products = productDAO.findAll(); // hoặc trả về danh sách rỗng: new ArrayList<>();
         }
 
         request.setAttribute("products", products);
-        request.getRequestDispatcher("index.jsp").forward(request, response); 
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 }

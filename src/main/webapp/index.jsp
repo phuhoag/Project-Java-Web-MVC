@@ -1,12 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="phu.dev.dao.ProductDAO" %>
 <%@ page import="phu.dev.model.Product" %>
 <%@ page import="phu.dev.ConnectMysql.DBConnection" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.sql.Connection" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+
+
 
 
 
@@ -61,6 +64,9 @@
 
 
 <link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/category.css">
+
+
 </head>
 <body>
     <nav class = "navbar navbar-expand-lg navbar-light bg-white py-4 fixed-top">
@@ -75,19 +81,17 @@
 
                 
                      
-        <form action="home" method="get" style="display:inline;">
-            <input
-                type="text"
-                name="keyword"
-                id="searchInput"
-                placeholder="Tìm sản phẩm..."
-                class="position-relative rounded-5 form-control-sm"
-                style="width: 200px; height: 35px; border: 1px solid transparent; background-color: rgba(207, 211, 203, .2);"
-                value="<%= request.getParameter("keyword") != null ? request.getParameter("keyword") : "" %>"
-                oninput="this.form.submit()"
-            />
-        </form>
-
+      <form action="home" method="get" id="searchForm" style="display:inline;">
+          <input
+              type="text"
+              name="keyword"
+              id="searchInput"
+              placeholder="Tìm sản phẩm..."
+              class="position-relative rounded-5 form-control-sm mt-3 mt-md-0"
+              style="width: 200px; height: 35px; border: 1px solid transparent; background-color: rgba(207, 211, 203, .2);"
+              value="<%= request.getParameter("keyword") != null ? request.getParameter("keyword") : "" %>"
+          />
+      </form>
 
 
 
@@ -108,20 +112,18 @@
                 <i class="bi bi-person-circle"></i>
                 
 
-                    
-                </button></a>
-                
-                <a href="./cart.jsp" class="user">
-                    <button type="button" class="btn position-relative" style="font-size: 20px;">
-                        <i class="bi bi-cart"></i>
-                       
-                       
-                        <!-- <span class="position-absolute top-0 start-100 translate-middle badge bg-danger " style="font-size: 12px;">0</span> -->
 
-                    </button>
+                </button>
                 </a>
                 
-              
+               <a href="add-to-cart?action=view" class="user">
+                   <button type="button" class="btn position-relative" style="font-size: 20px;">
+                       <i class="bi bi-cart"></i>
+                   </button>
+               </a>
+
+
+
             </div>
 
             <button class = "navbar-toggler border-0" type = "button" data-bs-toggle = "collapse" data-bs-target = "#navMenu">
@@ -133,9 +135,12 @@
                     <li class = "nav-item px-2 py-2">
                         <a class = "nav-link text-uppercase text-dark " href = "#header">Trang Chủ</a>
                     </li>
-                    <li class = "nav-item px-2 py-2">
-                        <a class = "nav-link text-uppercase text-dark" href = "#collection">Bộ Sưu Tập</a>
+
+                   <li class = "nav-item px-2 py-2">
+                   <a class = "nav-link text-uppercase text-dark " href = "#category">Bộ Sưu Tập</a>
                     </li>
+
+
                     <li class = "nav-item px-2 py-2">
                         <a class = "nav-link text-uppercase text-dark" href = "#special">Đặc Biệt</a>
                     </li>
@@ -145,13 +150,6 @@
                     <li class = "nav-item px-2 py-2">
                         <a class = "nav-link text-uppercase text-dark" href = "#about">Về Chúng Tôi </a>
                     </li>
-                    
-                    
-
-
-                    
-                   
-                    
                 </ul>
             </div>
         </div>
@@ -183,37 +181,78 @@
     </header>
 
 
+<section class="product-category">
+  <h2 class="text-center">DANH MỤC SẢN PHẨM</h2>
+  <div class="category-container" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+    <div class="category-item">
+     <a href="category?prefix=ÁO"><img src="assets/img/ao.png" alt="Áo" /></a>
+
+      <p>Áo</p>
+    </div>
+    <div class="category-item">
+      <a href="category?id=2&name=Áo Khoác"><img src="assets/img/ao-khoac.png" alt="Áo Khoác" /></a>
+      <p>Áo Khoác</p>
+    </div>
+    <div class="category-item">
+    <a href="category?prefix=VÁY"><img src="assets/img/vay.png" alt="Váy" /></a>
+      <p>Váy</p>
+    </div>
+    <div class="category-item">
+      <a href="category?prefix=Chân Váy"><img src="assets/img/chan-vay.png" alt="Chân Váy" /></a>
+      <p>Chân Váy</p>
+    </div>
+    <div class="category-item">
+      <a href="category?prefix=Quần"><img src="assets/img/quan.png" alt="Quần" /></a>
+      <p>Quần</p>
+    </div>
+    <div class="category-item">
+      <a href="category?prefix=ĐẦM"><img src="assets/img/dam-1.png" alt="Đầm" /></a>
+      <p>Đầm</p>
+    </div>
+    <div class="category-item">
+      <a href="category?prefix=Đồ Bộ"><img src="assets/img/do-bo-1.png" alt="Đồ Bộ" /></a>
+      <p>Đồ Bộ</p>
+    </div>
+    <div class="category-item">
+      <a href="category?prefix=Set Đồ"><img src="assets/img/set-do.png" alt="Set Đồ" /></a>
+      <p>Set Đồ</p>
+    </div>
+  </div>
+</section>
+
+
+
+
 
 
   
-    <section id="collection" class="py-5">
-        <div class="container-fluid">
-            <div class="title text-center">
-                <h2 class="position-relative d-inline-block">NEW ARRIVAL</h2>
-            </div>
+   <section id="collection" class="py-5">
+       <div class="container-fluid">
+           <div class="title text-center">
+               <h2 class="position-relative d-inline-block">NEW ARRIVAL</h2>
+           </div>
 
-            <div class="row g-0">
-                <div class="collection-list mt-4 row gx-0 gy-3">
-                    <% for(Product p : products) { %>
-                        <div class="col-md-6 col-lg-4 col-xl-3 p-2 new">
-                            <div class="collection-img position-relative overflow-hidden">
-                                <a href="detail?productId=<%= p.getId() %>">
-                                    <img src="assets/img/<%= p.getImage() %>" class="w-100" alt="<%= p.getName() %>">
-                                </a>
-                            </div>
-                            <div class="text-center">
-                                <div class="rating mt-3">
-                                    <!-- Thêm sao đánh giá nếu cần -->
-                                </div>
-                                <p class="text-capitalize my-1"><%= p.getName() %></p>
-                                <span class="fw-bold"><%= String.format("%,.0f", p.getPrice()) %> VND</span>
-                            </div>
-                        </div>
-                    <% } %>
-                </div>
-            </div>
-        </div>
-    </section>
+           <div class="row g-0">
+               <div class="collection-list mt-4 row gx-0 gy-3">
+                  <c:forEach var="p" items="${products}">
+                      <div class="col-md-6 col-lg-4 col-xl-3 p-2 new">
+                          <div class="collection-img position-relative overflow-hidden">
+                              <a href="detail?productId=${p.id}">
+                                  <img src="assets/img/${p.image}" class="w-100" alt="${p.name}">
+                              </a>
+                          </div>
+                          <div class="text-center">
+                              <p class="text-capitalize my-1">${p.name}</p>
+                              <span class="fw-bold">${p.price} VND</span>
+                          </div>
+                      </div>
+                  </c:forEach>
+
+               </div>
+           </div>
+       </div>
+   </section>
+
 
    
    
@@ -227,7 +266,7 @@
           <div class="title text-center py-5">
             <h2 class="position-relative d-inline-block text-uppercase">special</h2>
           </div>
-      
+
           <div class="special-list row g-0">
             <!-- Sản phẩm 1 -->
             <div class="col-md-6 col-lg-4 col-xl-3 p-2">
@@ -239,10 +278,10 @@
                   QUẦN LOE ĐEN PHỦ VẠT CHÉO
                 </p>
                 <span class="product-price fw-bold d-block">1.398.000 VND</span>
-                
+
               </div>
             </div>
-      
+
             <!-- Sản phẩm 2 -->
             <div class="col-md-6 col-lg-4 col-xl-3 p-2">
               <div class="special-img position-relative overflow-hidden">
@@ -253,10 +292,10 @@
                   JUPE BÚT CHÌ ĐEN PHỦ TẦNG
                 </p>
                 <span class="product-price fw-bold d-block">1.498.000 VND</span>
-                
+
               </div>
             </div>
-      
+
             <!-- Sản phẩm 3 -->
             <div class="col-md-6 col-lg-4 col-xl-3 p-2">
               <div class="special-img position-relative overflow-hidden">
@@ -267,10 +306,10 @@
                   ÁO THUN TRẮNG THÊU HOA XANH
                 </p>
                 <span class="product-price fw-bold d-block">698.000 VND</span>
-                
+
               </div>
             </div>
-      
+
             <!-- Sản phẩm 4 -->
             <div class="col-md-6 col-lg-4 col-xl-3 p-2">
               <div class="special-img position-relative overflow-hidden">
@@ -281,13 +320,13 @@
                   QUẦN SUÔNG XANH DA TRỜI XẾP
                 </p>
                 <span class="product-price fw-bold d-block">1.198.000 VND</span>
-                
+
               </div>
             </div>
           </div>
         </div>
       </section>
-      
+
     
    
     
@@ -341,7 +380,7 @@
                                 <span class = " text-center text-uppercase">Author:vnexpress </span>
                             </small>
                         </p>
-                        <a href = "./blog.jsp" class = "btn">Đọc Thêm</a>
+                        <a href = "blog" class = "btn">Đọc Thêm</a>
                     </div>
                 </div>
 
@@ -533,8 +572,28 @@
 
 
       
-      <script src="product.js"></script>
-      
+
+
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+<script>
+    document.getElementById("searchInput").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Ngăn reload mặc định nếu cần
+            document.getElementById("searchForm").submit(); // Gửi form khi nhấn Enter
+        }
+    });
+</script>
+
 </body>
 </html>

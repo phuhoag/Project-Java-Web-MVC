@@ -8,6 +8,30 @@
 <!--        <url-pattern>/hello</url-pattern>-->
 <!--    </servlet-mapping>-->
 
+
+    <servlet>
+        <servlet-name>LoginProduct</servlet-name>
+        <servlet-class>com.example.Controller.LoginProduct</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LoginProduct</servlet-name>
+        <url-pattern>/LoginProduct.controller</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>com.example.Controller.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+
+
+
+
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.example.Controller.LoginServlet</servlet-class>
@@ -39,6 +63,14 @@
         <servlet-name>ProductController</servlet-name>
         <url-pattern>/ProductController</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>CategoryController</servlet-name>
+        <servlet-class>com.example.controller.CategoryController</servlet-class>
+    </servlet>
+
+
 
 
 

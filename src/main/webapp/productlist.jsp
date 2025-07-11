@@ -2,10 +2,45 @@
 <%@ page import="java.util.List" %>
 <%@ page import="phu.dev.model.Product" %>
 <%@ page import="java.io.File" %>
+
+<%
+    String username = (String) session.getAttribute("username");
+    if (username == null) {
+        response.sendRedirect("LoginProduct.controller");
+        return;
+    }
+%>
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <title>Quản lý sản phẩm</title>
+
+    <link rel="shortcut icon" href="assets/img/logo_color%20(1).png" type="image/x-icon">
+        <!--css-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+
+
+
+
+
+
+
+
+
     <style>
         * {
             box-sizing: border-box;
@@ -129,7 +164,104 @@
 </head>
 <body>
 
-<h1>Danh sách sản phẩm</h1>
+<nav class = "navbar navbar-expand-lg navbar-light bg-white py-4 fixed-top">
+        <div class = "container">
+            <a class = "navbar-brand d-flex justify-content-between align-items-center order-lg-0" href = "home">
+                <img src = "assets/img/logo_color%20(1).png" alt = "logo">
+
+            </a>
+
+
+            <div class = "order-lg-2 nav-btns   " style="transform: translateX(50px);">
+
+
+
+        <form action="home" method="get" style="display:inline;">
+            <input
+                type="text"
+                name="keyword"
+                id="searchInput"
+                placeholder="Tìm sản phẩm..."
+                class="position-relative rounded-5 form-control-sm mt-3 mt-md-0"
+                style="width: 200px; height: 35px; border: 1px solid transparent; background-color: rgba(207, 211, 203, .2);"
+                value="<%= request.getParameter("keyword") != null ? request.getParameter("keyword") : "" %>"
+                oninput="this.form.submit()"
+            />
+        </form>
+
+
+
+
+
+
+
+
+                <button type = "button" class = "btn position-relative" style="font-size: 20px;">
+
+                   <a href="products" style="color: black;"> <i class="fa-solid fa-screwdriver-wrench"></i></a>
+
+                </button>
+
+
+               <a href="LoginServlet" class="text-reset" >
+                <button type="button" class = "btn position-relative " style="font-size: 20px;">
+
+                <i class="bi bi-person-circle"></i>
+
+
+
+                </button>
+                </a>
+
+               <a href="add-to-cart?action=view" class="user">
+                   <button type="button" class="btn position-relative" style="font-size: 20px;">
+                       <i class="bi bi-cart"></i>
+                   </button>
+               </a>
+
+
+
+
+            </div>
+
+            <button class = "navbar-toggler border-0" type = "button" data-bs-toggle = "collapse" data-bs-target = "#navMenu">
+                <span class = "navbar-toggler-icon"></span>
+            </button>
+
+            <div class = "collapse navbar-collapse order-lg-1  mb-20px" id = "navMenu" >
+                <ul class = "navbar-nav mx-auto text-center">
+                    <li class = "nav-item px-2 py-2">
+                        <a class = "nav-link text-uppercase text-dark " href = "#header">Trang Chủ</a>
+                    </li>
+                    <li class = "nav-item px-2 py-2">
+                        <a class = "nav-link text-uppercase text-dark" href = "#collection">Bộ Sưu Tập</a>
+                    </li>
+                    <li class = "nav-item px-2 py-2">
+                        <a class = "nav-link text-uppercase text-dark" href = "#special">Đặc Biệt</a>
+                    </li>
+                    <li class = "nav-item px-2 py-2">
+                        <a class = "nav-link text-uppercase text-dark" href = "#blogs">Tin Tức</a>
+                    </li>
+                    <li class = "nav-item px-2 py-2">
+                        <a class = "nav-link text-uppercase text-dark" href = "#about">Về Chúng Tôi </a>
+                    </li>
+
+
+
+
+
+
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+
+<h1 style="margin-top : 100px">Danh sách sản phẩm</h1>
 
 <%
     List<Product> products = (List<Product>) request.getAttribute("products");
@@ -195,5 +327,16 @@
     </form>
 </div>
 
+
+
+<p style="text-align:right;">
+    Xin chào <%= session.getAttribute("username") %> |
+    <a href="<%= request.getContextPath() %>/logout">Đăng xuất</a>
+</p>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

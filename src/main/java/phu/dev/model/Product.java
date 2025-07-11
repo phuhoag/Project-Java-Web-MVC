@@ -46,3 +46,4 @@ public class Product {
     public void setCreatedAt(Timestamp createdAt) { this.createdAt = createdAt; }
     public void setImage(String image) { this.image = image; }
 }
+

@@ -59,6 +59,22 @@ html {
 
 /* title */
 
+
+/* category */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* collection */
 .active-filter-btn {
   background-color: var(--pink) !important;
@@ -191,3 +207,10 @@ footer a:hover {
 .user:hover {
   color: #000;
 }
+
+
+
+
+
+
+

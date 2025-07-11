@@ -1,4 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -87,38 +90,25 @@
     <div class="container  " style="margin-top: 9rem;">
         <div class="row">
            
-            <div class="col-md-6 ">
-                <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                      <div class="carousel-item active">
-                        <img src="assets/img/anh1.jpg" class="d-block w-100" alt="...">
-                      </div>
-                      <div class="carousel-item">
-                        <img src="assets/img/anh2.jpg" class="d-block w-100" alt="...">
-                      </div>
-                      <div class="carousel-item">
-                        <img src="assets/img/anh3.jpg" class="d-block w-100" alt="...">
-                      </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Next</span>
-                    </button>
-                  </div>
-                
-            </div>
+
+
+
+          <div class="col-md-6">
+              <div class="carousel-item active">
+                 <img src="assets/img/${product.image}" class="d-block w-100" alt="${product.name}">
+
+              </div>
+          </div>
+
 
           
             <div class="col-md-6">
-                <h2 >ĐẦM TƠ TRẮNG CUỐN HOA XÒE</h2>
-                <p>2.498.000 VND</p>
+                <h2>${product.name}</h2>
+              <p><fmt:formatNumber value="${product.price}" type="number" groupingUsed="true"/> VND</p>
+
                 <p class="sku" style="color: black;">SKU: FS2401228DIWOBK</p >
 
-                
+
                 <div class="my-3">
                     <label for="size" class="form-label">Kích cỡ</label>
                     <div>
@@ -163,15 +153,8 @@
 
 
                 <div class="mt-4">
-                    <h5>Đặc điểm nổi bật:</h5>
-                    <ul>
-                        <li>80% Polyamide, 20% Spandex</li>
-                        <li>Kiểu dệt Knit - Jacquard</li>
-                        <li>Công nghệ Exdry, thoáng mát và nhanh khô</li>
-                        <li>Công nghệ Seamless không đường may</li>
-                        <li>Người mẫu: 181cm - 76kg, mặc áo 2XL</li>
-                        <li>Hỗ trợ sản xuất tại Việt Nam</li>
-                    </ul>
+                    <h5>Mô tả :</h5>  <p>${product.description}</p>
+
                 </div>
     
                
